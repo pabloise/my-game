@@ -1,29 +1,29 @@
 
 
-/*jslint bitwise:true, es5: true
+/*jslint bitwise:true, es5: true*/
 (function (window, undefined) {
     'use strict';
 
 var KEY_ENTER = 13,
-KEY_LEFT = 37,
-KEY_UP = 38,
-KEY_RIGHT = 39,
-KEY_DOWN = 40,
+    KEY_LEFT = 37,
+    KEY_UP = 38,
+    KEY_RIGHT = 39,
+    KEY_DOWN = 40,
 
-canvas = null,
-ctx = null,
-lastPress = null,
-pause = true,
-gameover = true,
-dir = 0,
-score = 0,
-//wall = [],
-body = [],
-food = null,
-iBody = new Image(),
-iFood = new Image(),
-aEat = new Audio(),
-aDie = new Audio();
+    canvas = null,
+    ctx = null,
+    lastPress = null,
+    pause = true,
+    gameover = true,
+    dir = 0,
+    score = 0,
+    //wall = [],
+    body = [],
+    food = null,
+    iBody = new Image(),
+    iFood = new Image(),
+    aEat = new Audio(),
+    aDie = new Audio();
 
 window.requestAnimationFrame = (function () {
     return window.requestAnimationFrame ||
@@ -73,7 +73,7 @@ function Rectangle(x, y, width, height) {
             ctx.strokeRect(this.x, this.y, this.width, this.height);
             }
         }
-    };
+    };*/
 }
 
 Rectangle.prototype = {
@@ -85,8 +85,8 @@ Rectangle.prototype = {
         } else {
         return (this.x < rect.x + rect.width &&
             this.x + this.width > rect.x &&
-        this.y < rect.y + rect.height &&
-        this.y + this.height > rect.y);
+            this.y < rect.y + rect.height &&
+            this.y + this.height > rect.y);
         }
     },
 
@@ -140,7 +140,7 @@ Rectangle.prototype.drawImage = function (ctx, img) {
         ctx.strokeRect(this.x, this.y, this.width, this.height);
         }
     }
-};
+};*/
 
 function random(max) {
     return ~~(Math.random() * max);
@@ -306,10 +306,18 @@ function act() {
     }
 }
     // Pause/Unpause
-if (lastPress === KEY_ENTER) {
-    pause = !pause;
-    lastPress = null;
+    if (lastPress === KEY_ENTER) {
+        pause = !pause;
+        lastPress = null;
     }
+}
+
+function resize() {
+    var w = window.innerWidth / canvas.width;
+    var h = window.innerHeight / canvas.height;
+    var scale = Math.min(h, w);
+    canvas.style.width = (canvas.width * scale) + 'px';
+    canvas.style.height = (canvas.height * scale) + 'px';
 }
 
 function repaint() {
@@ -347,77 +355,11 @@ function init() {
     //wall.push(new Rectangle(200, 100, 10, 10));
 
     // Start game
+    resize();
     run();
     repaint();
 }
-
+window.addEventListener('resize', resize, false);
 window.addEventListener('load', init, false);
 }(window));
-*/
-
-/* RequestAnimationFrame */
-
-'use strict';
-var canvas = null,
-    ctx = null,
-    lastUpdate = 0,
-    FPS = 0,
-    frames = 0,
-    acumDelta = 0,
-    x = 50,
-    y = 50;
-    
-window.requestAnimationFrame = (function () {
-    return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        function (callback) {
-            window.setTimeout(callback, 17);
-    };
-}());
-
-function paint(ctx) {
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = '#0f0';
-    ctx.fillRect(x, y, 10, 10);
-
-    ctx.fillStyle = '#fff';
-    ctx.fillText('FPS: ' + FPS, 10, 10);
-}
-function act() {
-    x += 2;
-    if (x > canvas.width) {
-        x = 0;
-    }
-}
-function run() {
-    window.requestAnimationFrame(run);
-
-    var now = Date.now(),
-        deltaTime = (now - lastUpdate) / 1000;
-    if (deltaTime > 1) {
-        deltaTime = 0;
-    }
-    lastUpdate = now;
-
-    frames += 1;
-    acumDelta += deltaTime;
-    if (acumDelta > 1) {
-        FPS = frames;
-        frames = 0;
-        acumDelta -= 1;
-    }
-
-    act();
-    paint(ctx);
-    }
-
-    function init() {
-        canvas = document.getElementById('canvas');
-        ctx = canvas.getContext('2d');
-        run();
-    }
-    window.addEventListener('load', init, false);
 
