@@ -39,7 +39,6 @@ function paint(ctx) {
     //ctx.fillText('Last Press: ' + lastPress, 0, 20);
 
     // Draw pause
-
     if (pause) {
         ctx.textAlign = 'center';
         ctx.fillText('PAUSE', 150, 75);
